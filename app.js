@@ -3,36 +3,36 @@ const addTaskButton = document.getElementById("add-task");
 const todoList = document.getElementById("incompleteTasks");
 const completedList = document.getElementById("completed-tasks");
 
+const createDomElement = function (tagName, properties = {}) {
+  const element = document.createElement(tagName);
+  Object.assign(element, properties);
+  return element;
+};
+
+const createDeleteButton = function () {
+  const deleteButton = createDomElement("button", { className: "delete" });
+  const deleteIcon = createDomElement("img", { src: "./remove.svg" });
+  deleteButton.append(deleteIcon);
+  return deleteButton;
+};
+
 const createTaskElement = function (taskText) {
-  const listItem = document.createElement("li");
+  const listItem = createDomElement("li");
+  const checkbox = createDomElement("input", { type: "checkbox" });
+  const label = createDomElement("label", {
+    className: "task",
+    innerText: taskText,
+  });
+  const editInput = createDomElement("input", {
+    className: "task",
+    type: "text",
+  });
+  const editButton = createDomElement("button", {
+    className: "edit",
+    innerText: "Edit",
+  });
 
-  const checkbox = document.createElement("input");
-  const label = document.createElement("label");
-  const editInput = document.createElement("input");
-  const editButton = document.createElement("button");
-
-  const deleteButton = document.createElement("button");
-  const deleteIcon = document.createElement("img");
-
-  label.innerText = taskText;
-  label.className = "task";
-
-  checkbox.type = "checkbox";
-  editInput.type = "text";
-  editInput.className = "task";
-
-  editButton.innerText = "Edit";
-  editButton.className = "edit";
-
-  deleteButton.className = "delete";
-  deleteIcon.src = "./remove.svg";
-  deleteButton.appendChild(deleteIcon);
-
-  listItem.appendChild(checkbox);
-  listItem.appendChild(label);
-  listItem.appendChild(editInput);
-  listItem.appendChild(editButton);
-  listItem.appendChild(deleteButton);
+  listItem.append(checkbox, label, editInput, editButton, createDeleteButton());
   return listItem;
 };
 
